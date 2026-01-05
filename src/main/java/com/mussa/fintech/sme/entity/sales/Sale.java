@@ -1,5 +1,8 @@
 package com.mussa.fintech.sme.entity.sales;
 
+import com.mussa.fintech.sme.common.AuditableEntity;
+import com.mussa.fintech.sme.common.enums.SaleChannel;
+import com.mussa.fintech.sme.common.enums.SaleStatus;
 import com.mussa.fintech.sme.entity.merchants.Merchant;
 import com.mussa.fintech.sme.entity.merchants.MerchantUser;
 import jakarta.persistence.*;
@@ -16,7 +19,7 @@ import java.util.UUID;
                 @Index(name = "idx_sales_status", columnList = "status")
         }
 )
-public class Sale {
+public class Sale extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -31,8 +34,9 @@ public class Sale {
     @JoinColumn(name = "sold_by_user_id")
     private MerchantUser soldByUser;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String saleChannel;
+    private SaleChannel saleChannel;
 
     @Column(nullable = false)
     private BigDecimal subtotalAmount;
@@ -46,8 +50,9 @@ public class Sale {
     @Column(nullable = false)
     private String currency;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private SaleStatus status;
 
     @Column(nullable = false)
     private OffsetDateTime createdAt;

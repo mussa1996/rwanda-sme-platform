@@ -1,5 +1,7 @@
 package com.mussa.fintech.sme.entity.merchants;
 
+import com.mussa.fintech.sme.common.AuditableEntity;
+import com.mussa.fintech.sme.common.enums.QrType;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
@@ -12,7 +14,7 @@ import java.util.UUID;
                 @UniqueConstraint(name = "uk_qr_payload", columnNames = "qr_payload")
         }
 )
-public class MerchantQrCode {
+public class MerchantQrCode extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,8 +25,9 @@ public class MerchantQrCode {
     @JoinColumn(name = "merchant_id", nullable = false)
     private Merchant merchant;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String qrType;
+    private QrType qrType;
 
     @Column(name = "qr_payload", nullable = false)
     private String qrPayload;

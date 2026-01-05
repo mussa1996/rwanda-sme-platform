@@ -1,5 +1,7 @@
 package com.mussa.fintech.sme.entity.merchants;
 
+import com.mussa.fintech.sme.common.AuditableEntity;
+import com.mussa.fintech.sme.common.enums.MerchantStatus;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
@@ -13,7 +15,7 @@ import java.util.UUID;
                 @Index(name = "idx_merchants_status", columnList = "status")
         }
 )
-public class Merchant {
+public class Merchant extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -40,8 +42,9 @@ public class Merchant {
     private String cell;
     private String village;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private MerchantStatus status;
 
     @Column(nullable = false)
     private OffsetDateTime createdAt;

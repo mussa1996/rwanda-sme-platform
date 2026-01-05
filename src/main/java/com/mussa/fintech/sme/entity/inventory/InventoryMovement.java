@@ -1,5 +1,7 @@
 package com.mussa.fintech.sme.entity.inventory;
 
+import com.mussa.fintech.sme.common.AuditableEntity;
+import com.mussa.fintech.sme.common.enums.InventoryMovementType;
 import com.mussa.fintech.sme.entity.merchants.Merchant;
 import com.mussa.fintech.sme.entity.products.Product;
 import jakarta.persistence.*;
@@ -16,7 +18,7 @@ import java.util.UUID;
                 @Index(name = "idx_inventory_movements_product", columnList = "product_id")
         }
 )
-public class InventoryMovement {
+public class InventoryMovement extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -31,8 +33,9 @@ public class InventoryMovement {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String movementType;
+    private InventoryMovementType movementType;
 
     @Column(nullable = false)
     private BigDecimal quantityChange;

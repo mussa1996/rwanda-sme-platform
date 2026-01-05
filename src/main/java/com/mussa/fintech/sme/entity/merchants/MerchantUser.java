@@ -1,5 +1,7 @@
 package com.mussa.fintech.sme.entity.merchants;
 
+import com.mussa.fintech.sme.common.AuditableEntity;
+import com.mussa.fintech.sme.common.enums.UserRole;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
@@ -12,7 +14,7 @@ import java.util.UUID;
                 @UniqueConstraint(name = "uk_merchant_user_phone", columnNames = {"merchant_id", "phone_number"})
         }
 )
-public class MerchantUser {
+public class MerchantUser extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -31,8 +33,9 @@ public class MerchantUser {
 
     private String email;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String role;
+    private UserRole role;
 
     @Column(nullable = false)
     private String passwordHash;

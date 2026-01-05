@@ -1,6 +1,8 @@
 package com.mussa.fintech.sme.entity.payments;
 
 
+import com.mussa.fintech.sme.common.AuditableEntity;
+import com.mussa.fintech.sme.common.enums.PaymentStatus;
 import com.mussa.fintech.sme.entity.merchants.Merchant;
 import com.mussa.fintech.sme.entity.sales.Sale;
 import jakarta.persistence.*;
@@ -19,7 +21,7 @@ import java.util.UUID;
                 )
         }
 )
-public class Payment {
+public class Payment extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -48,8 +50,9 @@ public class Payment {
     @Column(nullable = false)
     private String currency;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private PaymentStatus status;
 
     private OffsetDateTime paidAt;
 

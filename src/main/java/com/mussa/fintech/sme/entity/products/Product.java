@@ -1,5 +1,6 @@
 package com.mussa.fintech.sme.entity.products;
 
+import com.mussa.fintech.sme.common.AuditableEntity;
 import com.mussa.fintech.sme.entity.merchants.Merchant;
 import jakarta.persistence.*;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
                 @UniqueConstraint(name = "uk_product_name_per_merchant", columnNames = {"merchant_id", "product_name"})
         }
 )
-public class Product {
+public class Product extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

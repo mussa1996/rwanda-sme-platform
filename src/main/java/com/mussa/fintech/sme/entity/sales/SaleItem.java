@@ -1,5 +1,6 @@
 package com.mussa.fintech.sme.entity.sales;
 
+import com.mussa.fintech.sme.common.AuditableEntity;
 import com.mussa.fintech.sme.entity.products.Product;
 import jakarta.persistence.*;
 
@@ -8,7 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "sale_items")
-public class SaleItem {
+public class SaleItem extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

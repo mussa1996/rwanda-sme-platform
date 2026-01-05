@@ -1,5 +1,8 @@
 package com.mussa.fintech.sme.entity.notifications;
 
+import com.mussa.fintech.sme.common.AuditableEntity;
+import com.mussa.fintech.sme.common.enums.NotificationChannel;
+import com.mussa.fintech.sme.common.enums.NotificationStatus;
 import com.mussa.fintech.sme.entity.merchants.Merchant;
 import jakarta.persistence.*;
 
@@ -14,7 +17,7 @@ import java.util.UUID;
                 @Index(name = "idx_notifications_status", columnList = "status")
         }
 )
-public class Notification {
+public class Notification extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -25,8 +28,9 @@ public class Notification {
     @JoinColumn(name = "merchant_id")
     private Merchant merchant;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String channel;
+    private NotificationChannel channel;
 
     @Column(nullable = false)
     private String recipient;
@@ -37,8 +41,9 @@ public class Notification {
     @Column(nullable = false)
     private String messageContent;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private NotificationStatus status;
 
     private String providerMessageId;
 

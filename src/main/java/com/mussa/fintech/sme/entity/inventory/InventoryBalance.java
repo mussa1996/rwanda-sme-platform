@@ -1,5 +1,6 @@
 package com.mussa.fintech.sme.entity.inventory;
 
+import com.mussa.fintech.sme.common.AuditableEntity;
 import com.mussa.fintech.sme.entity.products.Product;
 import jakarta.persistence.*;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
                 @Index(name = "idx_inventory_product", columnList = "product_id")
         }
 )
-public class InventoryBalance {
+public class InventoryBalance extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
