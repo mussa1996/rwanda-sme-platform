@@ -1,4 +1,4 @@
 package com.mussa.fintech.sme.serviceImpl;
 
-public class MerchantServiceImp {
+public class MerchantServiceImpl {
 }

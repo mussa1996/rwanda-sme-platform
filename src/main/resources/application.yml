@@ -1,3 +1,8 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api
+
 spring:
   application:
     name: rwanda-sme-platform
@@ -7,31 +12,48 @@ spring:
 
   jackson:
     time-zone: Africa/Kigali
-    serialization:
-      write-dates-as-timestamps: false
+    date-format: "yyyy-MM-dd'T'HH:mm:ssXXX"
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_DATABASE:rwanda_sme_platform}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:mussa}
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     properties:
       hibernate:
-        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc:
           time_zone: Africa/Kigali
+          lob:
+            non_contextual_creation: true
 
   flyway:
-    enabled: true
     baseline-on-migrate: true
     locations: classpath:db/migration
-
-server:
-  port: 8080
-  servlet:
-    context-path: /api
+    schemas: core
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_DATABASE:rwanda_sme_platform}
+    user: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:mussa}
 
 logging:
   level:
     root: INFO
     org.hibernate.SQL: WARN
     org.springframework.web: INFO
+
+info:
+  app:
+    name: rwanda-sme-platform
+    description: Rwanda SME Platform
+    version: 1.0.0
+    env: ${ENV:local}
+
+security:
+  jwt:
+    publicKeyBase64: "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAET5/GVKF4MH4MHGHOhpkXTBio62gf9M/kVaxjbs1CctftWU1Dtrhu+llQ6iY7YlzIGy3WSGURiR+yMyw/Mp4bvA=="
+    privateKeyBase64: "MEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCCw4LCiASt2ymDeNTDF1SlYKtjBapPQoi1zgu1QyWefHg=="
