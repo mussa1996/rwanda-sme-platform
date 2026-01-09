@@ -1,4 +1,4 @@
-package com.mussa.fintech.sme.serviceImpl;
+package com.mussa.fintech.sme.service.impl;
 
 import com.mussa.fintech.sme.config.JwtUserDetails;
 import com.mussa.fintech.sme.service.JwtService;
