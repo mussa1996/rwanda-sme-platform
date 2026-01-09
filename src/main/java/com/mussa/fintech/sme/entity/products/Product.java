@@ -3,11 +3,17 @@ package com.mussa.fintech.sme.entity.products;
 import com.mussa.fintech.sme.common.AuditableEntity;
 import com.mussa.fintech.sme.entity.merchants.Merchant;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(
         name = "products",
@@ -36,11 +42,5 @@ public class Product extends AuditableEntity {
 
     @Column(nullable = false)
     private boolean isActive;
-
-    @Column(nullable = false)
-    private OffsetDateTime createdAt;
-
-    @Column(nullable = false)
-    private OffsetDateTime updatedAt;
 }
 

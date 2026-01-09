@@ -23,7 +23,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -55,5 +55,5 @@ info:
 
 security:
   jwt:
-    publicKeyBase64: "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAET5/GVKF4MH4MHGHOhpkXTBio62gf9M/kVaxjbs1CctftWU1Dtrhu+llQ6iY7YlzIGy3WSGURiR+yMyw/Mp4bvA=="
-    privateKeyBase64: "MEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCCw4LCiASt2ymDeNTDF1SlYKtjBapPQoi1zgu1QyWefHg=="
+    publicKeyBase64: ${JWT_PUBLIC_KEY_BASE64}
+    privateKeyBase64: ${JWT_PRIVATE_KEY_BASE64}

@@ -3,10 +3,16 @@ package com.mussa.fintech.sme.entity.merchants;
 import com.mussa.fintech.sme.common.AuditableEntity;
 import com.mussa.fintech.sme.common.enums.MerchantStatus;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(
         name = "merchants",
@@ -45,10 +51,4 @@ public class Merchant extends AuditableEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private MerchantStatus status;
-
-    @Column(nullable = false)
-    private OffsetDateTime createdAt;
-
-    @Column(nullable = false)
-    private OffsetDateTime updatedAt;
 }

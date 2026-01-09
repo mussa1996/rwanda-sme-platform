@@ -6,11 +6,17 @@ import com.mussa.fintech.sme.common.enums.PaymentStatus;
 import com.mussa.fintech.sme.entity.merchants.Merchant;
 import com.mussa.fintech.sme.entity.sales.Sale;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(
         name = "payments",
@@ -55,7 +61,4 @@ public class Payment extends AuditableEntity {
     private PaymentStatus status;
 
     private OffsetDateTime paidAt;
-
-    @Column(nullable = false)
-    private OffsetDateTime createdAt;
 }

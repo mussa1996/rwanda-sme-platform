@@ -1,10 +1,16 @@
 package com.mussa.fintech.sme.entity.payments;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(
         name = "payment_webhook_events",

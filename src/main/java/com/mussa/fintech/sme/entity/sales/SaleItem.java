@@ -3,10 +3,16 @@ package com.mussa.fintech.sme.entity.sales;
 import com.mussa.fintech.sme.common.AuditableEntity;
 import com.mussa.fintech.sme.entity.products.Product;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "sale_items")
 public class SaleItem extends AuditableEntity {
@@ -32,5 +38,6 @@ public class SaleItem extends AuditableEntity {
 
     @Column(nullable = false)
     private BigDecimal lineTotal;
+
 }
 

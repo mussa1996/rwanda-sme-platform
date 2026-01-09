@@ -5,11 +5,17 @@ import com.mussa.fintech.sme.common.enums.InventoryMovementType;
 import com.mussa.fintech.sme.entity.merchants.Merchant;
 import com.mussa.fintech.sme.entity.products.Product;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(
         name = "inventory_movements",
@@ -45,8 +51,5 @@ public class InventoryMovement extends AuditableEntity {
 
     @Column(nullable = false)
     private UUID referenceId;
-
-    @Column(nullable = false)
-    private OffsetDateTime createdAt;
 }
 

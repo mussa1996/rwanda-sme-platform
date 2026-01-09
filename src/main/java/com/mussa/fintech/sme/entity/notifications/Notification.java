@@ -5,10 +5,16 @@ import com.mussa.fintech.sme.common.enums.NotificationChannel;
 import com.mussa.fintech.sme.common.enums.NotificationStatus;
 import com.mussa.fintech.sme.entity.merchants.Merchant;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(
         name = "notifications",
@@ -46,9 +52,6 @@ public class Notification extends AuditableEntity {
     private NotificationStatus status;
 
     private String providerMessageId;
-
-    @Column(nullable = false)
-    private OffsetDateTime createdAt;
 
     private OffsetDateTime sentAt;
 }
