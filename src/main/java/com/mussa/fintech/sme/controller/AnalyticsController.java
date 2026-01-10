@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/analytics")
+@RequestMapping("/api/analytics")
 public class AnalyticsController {
 
     private final AnalyticsService analyticsService;

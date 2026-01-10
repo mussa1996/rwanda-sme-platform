@@ -1,6 +1,5 @@
 package com.mussa.fintech.sme.security;
 
-
 import com.mussa.fintech.sme.config.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -30,13 +29,13 @@ public class WebSecurityConfig {
             "/health",
             "/actuator/**",
 
-            // Auth
+            // Authentication
             "/api/auth/login",
 
-            // Payment webhooks (VERY IMPORTANT)
+            // Payment webhooks
             "/api/payments/webhook/**",
 
-            // Swagger (dev only)
+            // Swagger / OpenAPI (dev only - allowed here, disabled via profile if needed)
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html"
@@ -52,13 +51,13 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                // Enable CORS with default config
+                // Enable CORS (use default configuration)
                 .cors(Customizer.withDefaults())
 
-                // Disable CSRF (stateless API)
+                // Disable CSRF (stateless REST API)
                 .csrf(csrf -> csrf.disable())
 
-                // Disable session creation
+                // Stateless session management
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
@@ -69,14 +68,13 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()
                 )
 
-                // Add JWT filter BEFORE UsernamePasswordAuthenticationFilter
+                // JWT authentication filter
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 
-                // Disable default auth mechanisms
-                .httpBasic(Customizer.withDefaults())
+                // Disable default authentication mechanisms
+                .httpBasic(httpBasic -> httpBasic.disable())
                 .formLogin(form -> form.disable());
 
         return http.build();
     }
 }
-
