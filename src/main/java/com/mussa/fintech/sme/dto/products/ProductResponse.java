@@ -3,6 +3,7 @@ package com.mussa.fintech.sme.dto.products;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,21 +12,17 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductResponse {
 
-    private UUID productId;
-    private String productName;
-    private BigDecimal unitPrice;
-    private boolean isActive;
+    private final UUID productId;
+    private final String productName;
+    private final String sku;
+    private final BigDecimal unitPrice;
+    private final boolean isActive;
 
-    public ProductResponse(UUID productId, String productName,
-                           BigDecimal unitPrice, boolean isActive) {
-        this.productId = productId;
-        this.productName = productName;
-        this.unitPrice = unitPrice;
-        this.isActive = isActive;
-    }
+
 }
 

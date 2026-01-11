@@ -1,8 +1,7 @@
 package com.mussa.fintech.sme.dto.sales;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,27 +11,14 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SaleResponse {
 
-    private UUID saleId;
-    private BigDecimal totalAmount;
-    private String currency;
-    private String status;
-    private OffsetDateTime createdAt;
+    private final UUID saleId;
+    private final BigDecimal totalAmount;
+    private final String currency;
+    private final String status;
+    private final OffsetDateTime createdAt;
 
-    public SaleResponse(UUID saleId,
-                        BigDecimal totalAmount,
-                        String currency,
-                        String status,
-                        OffsetDateTime createdAt) {
-
-        this.saleId = saleId;
-        this.totalAmount = totalAmount;
-        this.currency = currency;
-        this.status = status;
-        this.createdAt = createdAt;
-    }
 }
-
