@@ -12,8 +12,9 @@ import com.mussa.fintech.sme.repository.MerchantRepository;
 import com.mussa.fintech.sme.repository.MerchantUserRepository;
 import com.mussa.fintech.sme.service.MerchantService;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,59 +22,101 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class MerchantServiceImpl implements MerchantService {
 
-    private final MerchantRepository merchantRepo;
-    private final MerchantUserRepository userRepo;
+    private final MerchantRepository merchantRepository;
+    private final MerchantUserRepository merchantUserRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public MerchantResponse createMerchant(CreateMerchantRequest req) {
-
-        if (merchantRepo.existsByPhoneNumber(req.getPhoneNumber())) {
-            throw new ConflictException("Merchant already exists");
+        if (merchantRepository.existsByPhoneNumber(req.getPhoneNumber())) {
+            throw new ConflictException("Merchant with this phone number already exists");
         }
 
-        Merchant merchant = merchantRepo.save(
-                Merchant.builder()
-                        .businessName(req.getBusinessName())
-                        .phoneNumber(req.getPhoneNumber())
-                        .status(MerchantStatus.ACTIVE)
-                        .build()
-        );
-
-        MerchantUser owner = MerchantUser.builder()
-                .merchant(merchant)
+        Merchant merchant = Merchant.builder()
+                .businessName(req.getBusinessName())
+                .businessCategory(req.getBusinessCategory())
                 .phoneNumber(req.getPhoneNumber())
-                .role(UserRole.OWNER)
-                .passwordHash(passwordEncoder.encode("ChangeMe123"))
+                .email(req.getEmail())
+                .addressText(req.getAddressText())
+                .district(req.getDistrict())
+                .sector(req.getSector())
+                .cell(req.getCell())
+                .village(req.getVillage())
+                .status(MerchantStatus.ACTIVE)
                 .build();
 
-        userRepo.save(owner);
+        merchantRepository.save(merchant);
 
-        return new MerchantResponse(
-                merchant.getMerchantId(),
-                merchant.getBusinessName(),
-                merchant.getBusinessCategory(),
-                merchant.getPhoneNumber(),
-                merchant.getStatus().name()
-        );
+        // MVP default owner user
+        MerchantUser owner = MerchantUser.builder()
+                .merchant(merchant)
+                .fullName("Merchant Owner")
+                .phoneNumber(req.getPhoneNumber())
+                .email(req.getEmail())
+                .role(UserRole.OWNER)
+                .passwordHash(passwordEncoder.encode("ChangeMe123"))
+                .isActive(true)
+                .build();
+
+        merchantUserRepository.save(owner);
+
+        log.info("Merchant created: {}", merchant.getMerchantId());
+        return mapToResponse(merchant);
     }
 
     @Override
-    public MerchantResponse getMerchant(UUID merchantId) {
-        Merchant merchant = merchantRepo.findById(merchantId)
-                .orElseThrow(() -> new ResourceNotFoundException("Merchant not found"));
+    public MerchantResponse getMerchantById(UUID merchantId) {
+        return mapToResponse(findMerchant(merchantId));
+    }
 
+    @Override
+    public Page<MerchantResponse> listMerchants(MerchantStatus status, String q, int page, int size) {
+        Pageable pageable = PageRequest.of(
+                Math.max(page, 0),
+                Math.min(Math.max(size, 1), 100),
+                Sort.by(Sort.Direction.DESC, "createdAt")
+        );
+
+        return merchantRepository.search(status, q, pageable)
+                .map(this::mapToResponse);
+    }
+
+    @Override
+    public MerchantResponse deactivateMerchant(UUID merchantId) {
+        Merchant merchant = findMerchant(merchantId);
+        merchant.setStatus(MerchantStatus.INACTIVE);
+        return mapToResponse(merchant);
+    }
+
+    @Override
+    public MerchantResponse activateMerchant(UUID merchantId) {
+        Merchant merchant = findMerchant(merchantId);
+        merchant.setStatus(MerchantStatus.ACTIVE);
+        return mapToResponse(merchant);
+    }
+
+    private Merchant findMerchant(UUID merchantId) {
+        return merchantRepository.findById(merchantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Merchant not found: " + merchantId));
+    }
+
+    private MerchantResponse mapToResponse(Merchant m) {
         return new MerchantResponse(
-                merchant.getMerchantId(),
-                merchant.getBusinessName(),
-                merchant.getBusinessCategory(),
-                merchant.getPhoneNumber(),
-                merchant.getStatus().name()
+                m.getMerchantId(),
+                m.getBusinessName(),
+                m.getBusinessCategory(),
+                m.getPhoneNumber(),
+                m.getEmail(),
+                m.getAddressText(),
+                m.getDistrict(),
+                m.getSector(),
+                m.getCell(),
+                m.getVillage(),
+                m.getStatus().name()
         );
     }
 }
-

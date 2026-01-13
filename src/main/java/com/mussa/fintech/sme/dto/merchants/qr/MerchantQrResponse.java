@@ -1,9 +1,8 @@
-package com.mussa.fintech.sme.dto.auth;
+package com.mussa.fintech.sme.dto.merchants.qr;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,17 +10,16 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
-@AllArgsConstructor
-public class LoginResponse {
+public class MerchantQrResponse {
 
-    private String accessToken;
+    private UUID merchantQrId;
     private UUID merchantId;
-    private UUID merchantUserId;
-    private String fullName;
-    private String phoneNumber;
-    private String role;
-}
 
+    private String qrType;
+    private String qrPayload;
+
+    private boolean active;
+}

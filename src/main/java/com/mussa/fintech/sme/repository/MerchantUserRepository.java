@@ -14,4 +14,5 @@ public interface MerchantUserRepository extends JpaRepository<MerchantUser, UUID
     );
 
     Optional<MerchantUser> findByPhoneNumber(String phoneNumber);
+    Optional<MerchantUser> findByPhoneNumberAndIsActiveTrue(String phoneNumber);
 }
