@@ -1,6 +1,9 @@
 package com.mussa.fintech.sme.repository;
 
+import com.mussa.fintech.sme.common.enums.SaleStatus;
 import com.mussa.fintech.sme.entity.sales.Sale;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -26,5 +29,15 @@ public interface SaleRepository extends JpaRepository<Sale, UUID> {
             UUID merchantId,
             BigDecimal amount,
             OffsetDateTime fromTime
+    );
+    Page<Sale> findAllByMerchant_MerchantIdAndStatus(
+            UUID merchantId,
+            SaleStatus status,
+            Pageable pageable
+    );
+
+    Page<Sale> findAllByMerchant_MerchantId(
+            UUID merchantId,
+            Pageable pageable
     );
 }
