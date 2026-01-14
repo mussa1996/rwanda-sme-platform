@@ -1,13 +1,31 @@
 package com.mussa.fintech.sme.service;
 
+import com.mussa.fintech.sme.dto.inventory.*;
+import org.springframework.data.domain.Page;
 
-import com.mussa.fintech.sme.dto.inventory.RestockRequest;
-
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public interface InventoryService {
 
-    void restock(RestockRequest request);
+    InventoryBalanceResponse getBalance(UUID merchantId, UUID productId);
 
-    void deductStock(UUID productId, int quantity);
+    void restock(
+            UUID merchantId,
+            RestockRequest request
+    );
+
+    void deductStock(
+            UUID merchantId,
+            UUID productId,
+            BigDecimal quantity,
+            String referenceType,
+            UUID referenceId
+    );
+
+    Page<InventoryMovementResponse> listMovements(
+            UUID merchantId,
+            int page,
+            int size
+    );
 }

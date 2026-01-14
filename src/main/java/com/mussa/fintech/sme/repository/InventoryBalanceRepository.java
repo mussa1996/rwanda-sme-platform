@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 
 import jakarta.persistence.LockModeType;
+import org.springframework.data.repository.query.Param;
+
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,5 +21,5 @@ public interface InventoryBalanceRepository
         SELECT b FROM InventoryBalance b
         WHERE b.product.productId = :productId
     """)
-    Optional<InventoryBalance> lockByProductId(UUID productId);
+    Optional<InventoryBalance> lockByProductId(@Param("productId") UUID productId);
 }
