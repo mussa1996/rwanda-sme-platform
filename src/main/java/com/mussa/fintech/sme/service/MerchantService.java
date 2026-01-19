@@ -15,7 +15,6 @@ public interface MerchantService {
     MerchantResponse createMerchant(CreateMerchantRequest request);
 
     MerchantResponse getMerchantById(UUID merchantId);
-//    List<MerchantResponse> getAllMerchants();
     Page<MerchantResponse> listMerchants(MerchantStatus status, String q, int page, int size);
 
     MerchantResponse deactivateMerchant(UUID merchantId);

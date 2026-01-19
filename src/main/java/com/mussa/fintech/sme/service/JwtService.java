@@ -10,6 +10,5 @@ public interface JwtService {
     JwtUserDetails parseToken(String token);
     String generateToken(UUID merchantUserId, UUID merchantId, String role);
 
-//    String generateToken(JwtUserDetails user);
 
 }
