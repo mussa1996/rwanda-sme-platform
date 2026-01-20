@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import java.util.UUID;
 
 public interface NotificationService {
-//    void notifyPaymentSuccess(String phone, String message);
 
     void sendSms(UUID merchantId, SmsRequest request);
 
