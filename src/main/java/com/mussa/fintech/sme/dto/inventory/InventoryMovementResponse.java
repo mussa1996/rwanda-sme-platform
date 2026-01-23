@@ -2,11 +2,14 @@ package com.mussa.fintech.sme.dto.inventory;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Getter
+@Setter
 @AllArgsConstructor
 public class InventoryMovementResponse {
 
